@@ -120,14 +120,14 @@ SITE_ID = 1
 #     CALENDLY_CLIENT_SECRET = os.environ.get("CALENDLY_PROD_CLIENT_SECRET", "nZP6IerDsSbP_o2AQYKIn391D38ampzrZdYGS7Allkk")
 #     CALENDLY_REDIRECT_URI = os.environ.get("CALENDLY_PROD_REDIRECT_URI", "http://localhost:8000/calendly/auth")
 
-#     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-#     EMAIL_USE_TLS = True
-#     EMAIL_PORT = 587
-#     EMAIL_HOST = "smtp.gmail.com"
-#     EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "asadullah7370@gmail.com")
-#     EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASS", "suzqsiuijgmuxagv")
-#     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-#     SITE_ID = 2
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "asadullah7370@gmail.com")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASS", "suzqsiuijgmuxagv")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SITE_ID = 2
 
 LOGIN_URL = "/accounts/login/"
 LOGIN_REDIRECT_URL = "/"
