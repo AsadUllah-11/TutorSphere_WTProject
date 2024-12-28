@@ -8,13 +8,25 @@
     <link rel="stylesheet" href="{% static 'css/messages.css' %}">
 </head>
 <body>
-    
     <a href="javascript:history.back()" class="back-link">← Back</a>    
     <h1>Your Messages</h1>
 
     <div class="messages-container">
         <div class="received-messages">
             <h2>Received Messages</h2>
+            <form id="reply-form" method="POST">
+                {% csrf_token %}
+                <select name="recipient" id="recipient" class="recipient-select" required>
+                    <option value="" disabled selected>Select a message to reply</option>
+                    {% for message in received_messages %}
+                        <option value="{{ message.sender.id }}">
+                            From {{ message.sender.username }}: {{ message.content|slice:":50" }}...
+                        </option>
+                    {% endfor %}
+                </select>
+                <textarea name="content" class="reply-textarea" placeholder="Write your message..." required></textarea>
+                <button type="submit" class="send-button">Send</button>
+            </form>
             {% for message in received_messages %}
                 <div class="message received">
                     <p><strong>{{ message.sender.username }}:</strong> {{ message.content }}</p>
@@ -35,15 +47,6 @@
             {% empty %}
                 <p>No messages sent.</p>
             {% endfor %}
-        </div>
-
-        <div class="message-form">
-            <h2>Send a New Message</h2>
-            <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="send-button">Send</button>
-            </form>
         </div>
     </div>
 </body>
@@ -69,18 +72,28 @@
         color: #444;
         margin-top: 20px;
     }
-    
+
+    .back-link {
+        display: inline-block;
+        margin: 10px 20px;
+        text-decoration: none;
+        color: #007BFF;
+        font-size: 16px;
+    }
+
+    .back-link:hover {
+        text-decoration: underline;
+    }
+
     /* Messages Container */
     .messages-container {
         display: flex;
         flex-direction: column;
         gap: 20px;
-        max-width: 900px;
-        margin: 20px auto;
+        max-width: 100%;
+        margin: 0 auto;
         padding: 20px;
         background-color: #fff;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        border-radius: 8px;
     }
     
     /* Received and Sent Messages */
@@ -117,23 +130,32 @@
         text-align: right;
         margin-top: 5px;
     }
-    
-    /* Form Section */
-    .message-form {
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 15px;
-        text-align: center;
-    }
-    
-    .message-form form {
+
+    /* Reply Form */
+    #reply-form {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        margin-bottom: 20px;
     }
-    
-    .message-form button.send-button {
+
+    .recipient-select {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .reply-textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+        resize: none;
+        height: 80px;
+    }
+
+    .send-button {
         background-color: #007BFF;
         color: white;
         border: none;
@@ -143,11 +165,11 @@
         font-size: 16px;
         transition: background-color 0.3s;
     }
-    
-    .message-form button.send-button:hover {
+
+    .send-button:hover {
         background-color: #0056b3;
     }
-    
+
     /* Responsive Design */
     @media (min-width: 768px) {
         .messages-container {
@@ -159,10 +181,5 @@
         .received-messages, .sent-messages {
             width: 45%;
         }
-    
-        .message-form {
-            width: 100%;
-        }
     }
-    
 </style>
