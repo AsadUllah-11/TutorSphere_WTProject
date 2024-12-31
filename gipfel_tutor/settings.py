@@ -37,11 +37,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY", get_random_secret_key())
 # DEVELOPMENT = os.environ.get("DEVELOPMENT", "") == "False"
 DEBUG = True
 DEVELOPMENT = True
-ALLOWED_HOSTS = [
-    ".herokuapp.com",
-    "localhost",
-    "127.0.0.1",
-]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
